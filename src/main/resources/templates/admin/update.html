@@ -6,16 +6,37 @@
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/users/{id} (id = ${user.getId()})}" th:object="${user}">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{firstName}" id="name">
+<form th:method="PATCH" th:action="@{/admin/update}" th:object="${user}">
     <br>
-    <label for="last_name">Lastname</label>
-    <input type="text" th:field="*{lastName}" id="last_name">
+    <label for="name">Username</label>
+    <input type="text" th:field="*{username}" id="name">
+    <br>
+    <br>
+    <label for="id">ID</label>
+    <input type="text" th:field="*{id}" id="id">
+    <br>
+    <br>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password">
+    <br>
     <br>
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email">
     <br>
+    <br>
+    <label for="age">Age</label>
+    <input type="text" th:field="*{age}" id="age">
+    <br>
+    <br>
+    <div class="form-group row">
+        <label class="col-4 col-form-label">Roles: </label>
+        <div class="col-8">
+            <th:block th:each="role: ${listRoles}">
+                <input type="checkbox" th:field="*{roles}"
+                       th:text="${role.getRoleName()}" th:value="${role.getId()}" class="m-2" />
+            </th:block>
+        </div>
+    </div>
     <input type="submit" value="Update">
 </form>
 

@@ -53,6 +53,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void update(User user) {
         user.setRoles(user.getRoles());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 

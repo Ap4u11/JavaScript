@@ -37,7 +37,7 @@ public class AdminController {
         model.addAttribute("listRoles",userService.listRoles());
         return "admin/update";
     }
-    @PatchMapping("/{id}")
+    @PatchMapping("/update")
     public String saveUpdateUser(@ModelAttribute("user") User user){
         userService.update(user);
         return "redirect:/admin";
