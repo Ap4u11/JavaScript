@@ -1,4 +1,5 @@
 package ru.kata.spring.boot_security.demo.entities;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,27 +17,28 @@ public class User implements UserDetails {
 
    @Column(name = "user_name")
    private String username;
-   @Column(name = "age")
+
    private Long age;
 
 
-   @Column(name = "password")
    private String password;
 
-   @Column(name = "email")
+
    private String email;
-   @ManyToMany(fetch = FetchType.LAZY)
+   @ManyToMany
    @JoinTable(name = "users_roles",
            joinColumns = @JoinColumn(name = "user_id"),
            inverseJoinColumns = @JoinColumn(name = "role_id"))
    private Set<Role> roles;
-   public User() {}
-   
-   public User(String username, String password, String email,Long age) {
+
+   public User() {
+   }
+
+   public User(String username, String password, String email, Long age) {
       this.username = username;
       this.password = password;
       this.email = email;
-      this.age=age;
+      this.age = age;
    }
 
    public Long getId() {
@@ -103,6 +105,7 @@ public class User implements UserDetails {
    public void setRoles(Set<Role> roles) {
       this.roles = roles;
    }
+
    public Long getAge() {
       return age;
    }

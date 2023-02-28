@@ -1,4 +1,5 @@
 package ru.kata.spring.boot_security.demo.entities;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -18,11 +19,13 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return getRoleName();
     }
+
     public Role() {
-}
-    public Role(String roleName){
-        this.roleName=roleName;
-}
+    }
+
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
 
     public Long getId() {
         return id;
@@ -55,9 +58,9 @@ public class Role implements GrantedAuthority {
 
     @Override
     public int hashCode() {
-        final int prime =31;
-        int result =1;
-        result =prime*result+((id==null)?0:id.hashCode());
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
 }
