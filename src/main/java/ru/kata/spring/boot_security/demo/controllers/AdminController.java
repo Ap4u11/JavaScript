@@ -1,14 +1,19 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 import ru.kata.spring.boot_security.demo.services.UserService;
+
+import java.security.Principal;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
+
 public class AdminController {
     private final UserService userService;
 
@@ -16,35 +21,35 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String showAllUsers(Model model) {
-        model.addAttribute("users", userService.showUsers());
-        return "admin/admin";
+    @GetMapping("/adminview")
+    public String showAllUsers(Principal principal, Model model) {
+        model.addAttribute("user", userService.getUserByEmail(principal.getName()));
+        return "adminview";
     }
 
-    @GetMapping("/create")
-    public String addNewUser(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
+    @GetMapping("/new")
+    public String addNewUser(@ModelAttribute("user") User user, Model model, Principal principal) {
+        model.addAttribute("admin", userService.getUserByEmail(principal.getName()));
         model.addAttribute("listRoles", userService.listRoles());
-        return "admin/create";
+        return "new";
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public String saveUser(@ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/{id}/update")
+    @GetMapping("/update")
     public String updateUser(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("users", userService.getUser(id));
         model.addAttribute("listRoles", userService.listRoles());
-        return "admin/update";
+        return "redirect:/admin";
     }
 
-    @PatchMapping("/update")
-    public String saveUpdateUser(@ModelAttribute("user") User user) {
+    @PatchMapping("/{id}/update")
+    public String saveUpdateUser(@ModelAttribute("userUpdate") User user, Model model) {
+        model.addAttribute("listRoles", userService.listRoles());
         userService.update(user);
         return "redirect:/admin";
     }

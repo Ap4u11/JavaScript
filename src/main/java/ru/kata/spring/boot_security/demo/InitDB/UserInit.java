@@ -39,13 +39,13 @@ public class UserInit {
         Set<Role> roles = new HashSet<>();
         roles.add(adminRole);
         roles.add(userRole);
-        User userAdmin = new User("admin", "admin", "dasda", 28L);
+        User userAdmin = new User("Artem", "Panfilov", 28L, "admin@yandex.ru", "admin");
         userAdmin.setRoles(userAdmin.getRoles());
         userAdmin.setRoles(roles);
         userService.save(userAdmin);
 
         roles.clear();
-        User user1 = new User("user", "user", "sdada", 25L);
+        User user1 = new User("Nina", "Jdanova", 25L, "user@yandex.ru", "user");
         roles.add(userRole);
         user1.setRoles(roles);
         userService.save(user1);
