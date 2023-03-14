@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
 
     public User getUser(Long id) {
-        return userRepository.getOne(id);
+        return userRepository.findById(id).get();
     }
 
 
@@ -51,9 +51,12 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public void update(User user) {
-
-        user.setRoles(user.getRoles());
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        if (user.getPassword().equals("") || user.getPassword().equals(
+                userRepository.getById(user.getId()).getPassword())) {
+            user.setPassword(userRepository.getById(user.getId()).getPassword());
+        } else {
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 
